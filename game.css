@@ -11,17 +11,90 @@ div {
 	font-size: 2em;
 }
 #bg {
+	position: relative;
 	margin-top: 10px;
 	width: 425px;
 	height: 425px;
 	border-radius: 10px;
 	background: #fcc;
 }
-#bg .grid {
-	float: left;
+#bg .grid,.cell {
 	margin: 21px 0 0 21px;
 	width: 80px;
 	height: 80px;
 	border-radius: 8px;
+}
+#bg .grid {
+	float: left;
 	background: #F3F1F1;
+}
+
+#bg .cell {
+	position: absolute;
+	line-height: 80px;
+	font-size: 2em;
+	color: #ccc;
+}
+#bg #c00,#c01,#c02,#c03 {
+	top: 0;
+}
+#bg #c00,#c10,#c20,#c30 {
+	left: 0;
+}
+#bg #c10,#c11,#c12,#c13 {
+	top: 101px;
+}
+#bg #c01,#c11,#c21,#c31 {
+	left: 101px;
+}
+#bg #c20,#c21,#c22,#c23 {
+	top: 202px;
+}
+#bg #c02,#c12,#c22,#c32 {
+	left: 202px;
+}
+#bg #c30,#c31,#c32,#c33 {
+	top: 303px;
+}
+#bg #c03,#c13,#c23,#c33 {
+	left: 303px;
+}
+.c2 {
+	background: #ff9;
+}
+.c4 {
+	background: #FFA927;
+}
+.c8 {
+	background: #F3D923;
+}
+.c16 {
+	background: #76D40E; 
+}
+.c32 {
+	background: #EA8888;
+}
+.c64 {
+	background: #BFF53E;
+}
+.c128 {
+	background: #EFA140;
+}
+.c256 {
+	background: #0CCDE0;
+}
+.c512 {
+	background: #357ECA;
+}
+.c1024 {
+	background: #910BE4;
+}
+.c2048 {
+	background: #E40B0B;
+}
+.c4096 {
+	background: #FF3609;
+}
+.c8192 {
+	background: #FF7600;
 }
