@@ -74,7 +74,25 @@ var game = {
 		if(!this.isFull()){
 			return 0;
 		}
+		for(var x = 0; x<=3; x++){
+			for(var y = 0; y<=3; y++){
+				/* 判断与右边是否一样 */
+				if(x!=3){
+					if(this.data[x][y] == this.data[x+1][y]){
+						return 0;
+					}	
+				}
+				/* 判断与下边是否一样 */
+				if(y!=3){
+					if(this.data[x][y] == this.data[x][y+1]){
+						return 0;
+					}
+				}
+			}
+		}
+		return 1;
 	}
+	/* 是否能左移 */
 }
 window.onload = function(){
 	game.start();
