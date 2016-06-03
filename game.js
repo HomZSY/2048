@@ -13,9 +13,12 @@ var game = {
 			[0,0,0,0],
 			[0,0,0,0],
 			[0,0,0,0],
-		],
+		];
 		this.randomNum();
 		this.randomNum();
+		this.state = this.RUNNING;
+		this.score = 0;
+		this.updateView();
 	},
 	isFull: function(){ //0则未满
 		for(var i = 0; i <= 3; i++){
@@ -26,7 +29,7 @@ var game = {
 			}
 		}
 		return 1;
-	} 
+	},
 	randomNum: function(){
 		if(this.isFull()){ //若满了则游戏结束了
 			return;
@@ -42,6 +45,21 @@ var game = {
 			}
 		}
 	},
+	/* 更新游戏的界面 */
+	updateView: function(){
+		/* 修改方格内的东西 */
+		for(var x = 0; x <= 3; x++){
+			for(var y = 0; y<=3; y++){
+				// 寻找在游戏界面上的方格
+				var cell = document.getElementById("c"+x+y);
+				cell.innerHTML = this.data[x][y] == 0 ? "" : this.data[x][y];
+				cell.className = this.data[x][y] == 0 ? "cell" : "cell"+" c"+this.data[x][y];
+			}
+		}
+		/* 修改分数 */
+		var score = document.getElementById('score');
+		score.innerHTML = "Score : "+this.score;
+	}
 }
 window.onload = function(){
 	game.start();
