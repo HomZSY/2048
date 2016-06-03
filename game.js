@@ -20,6 +20,7 @@ var game = {
 		this.score = 0;
 		this.updateView();
 	},
+	/* 看方格是否满 */
 	isFull: function(){ //0则未满
 		for(var i = 0; i <= 3; i++){
 			for(var j = 0; j <=3 ; j++){
@@ -30,6 +31,7 @@ var game = {
 		}
 		return 1;
 	},
+	/* 产生随机方格 */
 	randomNum: function(){
 		if(this.isFull()){ //若满了则游戏结束了
 			return;
@@ -58,7 +60,20 @@ var game = {
 		}
 		/* 修改分数 */
 		var score = document.getElementById('score');
-		score.innerHTML = "Score : "+this.score;
+		score.innerHTML = "Score : " + this.score;
+		/* 如果游戏结束，则要显示gameOver页面 */
+		if(this.isGameOver()){
+			this.state = this.gameOver;
+			gameOver.style.display = "block";
+			var LastScore = document.getElementById('LastScore');
+			LastScore.innerHTML = this.score;
+		}
+	}
+	/* 是否游戏结束 */
+	isGameOver: function(){  //1则游戏结束
+		if(!this.isFull()){
+			return 0;
+		}
 	}
 }
 window.onload = function(){
