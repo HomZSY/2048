@@ -1,5 +1,9 @@
 var gameOver = document.getElementById('gameOver');
 var game = {
+	state: 1,
+	gameOver: 0, 
+	RUNNING: 1, //出现新的方格之后的现状
+	PLAYING: 2, //移动状态
 	data: [], //存游戏方格内的所有数字
 	score: 0,
 	start: function(){
