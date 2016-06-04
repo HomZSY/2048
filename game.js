@@ -111,6 +111,8 @@ var game = {
 	moveLeft: function(){
 		if(canLeft){
 
+
+			this.randomNum();
 		}
 	},
 	/* 是否能右移 */
