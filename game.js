@@ -109,11 +109,43 @@ var game = {
 	},
 	/* 向左移动 */
 	moveLeft: function(){
-		if(canLeft){
-
-
-			this.randomNum();
+		if(this.canLeft()){
+			for(var x = 0; x <= 3; x++){
+				/*从0位置开始到2结束遍历row行中的每个元素,
+				获得一个下一个不为0的元素的nextY下标
+				判断合并
+				  如果自己==0，用下一个元素的值替换自己，将下一个元素的值设为0，
+				  如果自己==下一个元素 将自己*2； 将下一个元素设为0*/
+				for(var y =0; y <= 2; y++){
+					var nextY = this.getNextRight(x,y);
+					if(nextY == -1){
+						break;
+					}
+					if(this.data[x][y] == 0){
+						this.data[x][y] = this.data[x][nextY];
+						this.data[x][nextY] = 0;
+					}else if(this.data[x][y] == this.data[x][nextY]){
+						this.data[x][y] *= 2;
+						this.data[x][nextY] = 0;
+					}
+				}
+			}
+			this.state = this.PLAYING;
+			game.state = game.RUNNING;
+			game.randomNum();
+			game.updateView();
 		}
+		
+	},
+
+	/* 获取到当前行中右方第一个不为0的方格，返回下标 */
+	getNextRight: function(x,y){
+		for(var i = y+1; i <= 3; i++){
+			if(this.data[x][i] != 0){
+				return i;
+			}
+		}
+		return -1;
 	},
 	/* 是否能右移 */
 	canRight: function(){ //1则可以右移
@@ -127,6 +159,10 @@ var game = {
 				}
 			}
 		}
+	},
+	/* 向右移动 */
+	moveRight: function(){
+
 	},
 	/* 是否能上移 */
 	canUp: function(){ //1则可以上移
@@ -142,10 +178,10 @@ var game = {
 		}
 		return 0;
 	},
-	/* 向左移动 */
+	/* 向上移动 */
 	moveUp: function(){
 		if(canUp){
-
+			
 		}
 	},
 	/* 是否能下移 */
@@ -169,10 +205,34 @@ var game = {
 		}
 	},	
 
-}
+};
 window.onload = function(){
 	game.start();
-}
-var action = {
-
-}
+	 document.onkeydown=function(){
+    /*step1：先获得事件对象！
+           所有事件发生时，都自动创建一个event对象
+         event对象中封装了事件信息，比如：鼠标的坐标，触发事件的元素，按键的编号
+      step2：获得事件对象中的按键编号
+          如果是37号，就调用moveLeft
+    */  
+    console.log(game.state);
+    if(game.state!=game.PLAYING){
+      var event = window.event || arguments[0];//||经常用于解决浏览器兼容性问题
+      if(game.state == game.RUNNING){ 
+        if(event.keyCode == 37){
+          game.moveLeft();  
+        }else if(event.keyCode == 39){
+          game.moveRight(); 
+        }
+        else if(event.keyCode == 38){
+          game.moveUp();  
+        }
+        else if(event.keyCode == 40){
+          game.moveDown();  
+        }
+      }else if(event.keyCode==13){
+        game.start();
+      }
+    }
+  }
+};
