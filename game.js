@@ -116,7 +116,7 @@ var game = {
 				判断合并
 				  如果自己==0，用下一个元素的值替换自己，将下一个元素的值设为0，
 				  如果自己==下一个元素 将自己*2； 将下一个元素设为0*/
-				for(var y =0; y <= 2; y++){
+				for(var y =0; y <= 3; y++){
 					var nextY = this.getNextRight(x,y);
 					if(nextY == -1){
 						break;
@@ -124,9 +124,11 @@ var game = {
 					if(this.data[x][y] == 0){
 						this.data[x][y] = this.data[x][nextY];
 						this.data[x][nextY] = 0;
+						y--;
 					}else if(this.data[x][y] == this.data[x][nextY]){
 						this.data[x][y] *= 2;
 						this.data[x][nextY] = 0;
+						this.score += 20;
 					}
 				}
 			}
@@ -162,7 +164,38 @@ var game = {
 	},
 	/* 向右移动 */
 	moveRight: function(){
-
+		if(this.canRight()){
+			for(var x = 0; x <= 3; x++){
+				for(var y = 3; y >= 0; y--){
+					var nextY = this.getNextLeft(x,y);
+					if(nextY == -1){
+						break;
+					}
+					if(this.data[x][y] == 0){
+						this.data[x][y] = this.data[x][nextY];
+						this.data[x][nextY] = 0;
+						y++;
+					}else if(this.data[x][y] == this.data[x][nextY]){
+						this.data[x][y] *= 2;
+						this.data[x][nextY] = 0;
+						this.score += 20;
+					}
+				}
+			}
+			this.state = this.PLAYING;
+			game.state = game.RUNNING;
+			game.randomNum();
+			game.updateView();
+		}
+	},
+	/* 获取到当前行中左方第一个不为0的方格，返回下标 */
+	getNextLeft: function(x,y){
+		for(var i = y-1; i >= 0; i--){
+			if(this.data[x][i] != 0){
+				return i;
+			}
+		}
+		return -1;
 	},
 	/* 是否能上移 */
 	canUp: function(){ //1则可以上移
@@ -180,9 +213,38 @@ var game = {
 	},
 	/* 向上移动 */
 	moveUp: function(){
-		if(canUp){
-			
+		if(this.canUp()){
+			for(var y = 0; y <= 3; y++){
+				for(var x = 0; x<=3; x++){
+					var nextX = this.getNextDown(x,y);
+					if(nextX == -1){
+						break;
+					}
+					if(this.data[x][y] == 0){
+						this.data[x][y] = this.data[nextX][y];
+						this.data[nextX][y] = 0;
+						x--;
+					}else if(this.data[x][y] == this.data[nextX][y]){
+						this.data[x][y] *= 2;
+						this.data[nextX][y] = 0;
+						this.score += 20;
+					}
+				}
+			}
+			this.state = this.PLAYING;
+			game.state = game.RUNNING;
+			game.randomNum();
+			game.updateView();
 		}
+	},
+	/* 获取到当前列中下方第一个不为0的方格，返回下标 */
+	getNextDown: function(x,y){
+		for(var i = x+1; i <= 3; i++){
+			if(this.data[i][y] != 0){
+				return i;
+			}
+		}
+		return -1;
 	},
 	/* 是否能下移 */
 	canDown: function(){ //1则可以下移
@@ -200,10 +262,39 @@ var game = {
 	},
 	/* 向下移动 */
 	moveDown: function(){
-		if(canDown){
-			
+		if(this.canDown()){
+			for(var y = 0; y <= 3; y++){
+				for(var x = 3; x >= 0; x--){
+					var nextX = this.getNextUp(x,y);
+					if(nextX == -1){
+						break;
+					}
+					if(this.data[x][y] == 0){
+						this.data[x][y] = this.data[nextX][y];
+						this.data[nextX][y] = 0;
+						x++;
+					}else if(this.data[x][y] == this.data[nextX][y]){
+						this.data[x][y] *= 2;
+						this.data[nextX][y] = 0;
+						this.score += 20;
+					}
+				}
+			}
+			this.state = this.PLAYING;
+			game.state = game.RUNNING;
+			game.randomNum();
+			game.updateView();
 		}
 	},	
+	/* 获取到当前列中上方第一个不为0的方格，返回下标 */
+	getNextUp: function(x,y){
+		for(var i = x-1; i >= 0; i--){
+			if(this.data[i][y] != 0){
+				return i;
+			}
+		}
+		return -1;
+	},
 
 };
 window.onload = function(){
