@@ -267,7 +267,7 @@ var game = {
 				for(var x = 3; x >= 0; x--){
 					var nextX = this.getNextUp(x,y);
 					if(nextX == -1){
-						break;
+						break;	
 					}
 					if(this.data[x][y] == 0){
 						this.data[x][y] = this.data[nextX][y];
